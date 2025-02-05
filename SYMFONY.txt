@@ -1,0 +1,31 @@
+----- CREAR PROYECTO -----
+symfony new --webapp nombre_proyecto  ---------> CREAMOS PROYECTO DE SYMFONY
+symfony server:start --------------------------> INICIAMOS SERVIDOR DE SYMFONY
+
+----- INSTALAR PAQUETES -----
+composer require symfony/maker-bundle --dev ---> PARA ACTUALIZAR PAQUETES
+composer require symfony/orm-pack -------------> PARA ACTUALIZAR PAQUETES
+composer require twig -------------------------> PARA ACTUALIZAR PAQUETES
+composer require security ---------------------> PARA ACTUALIZAR PAQUETES
+composer require form validator ---------------> PARA ACTUALIZAR PAQUETES
+symfony composer require api ------------------> INSTALAR API PLATFORM
+
+----- COMANDOS PARA LA BD -----
+php bin/console doctrine:database:create ------> CREAMOS LA BASE DE DATOS
+php bin/console make:migration ----------------> HACEMOS LA MIGRACION
+php bin/console doctrine:migrations:migrate ---> CONFIRMAMOS LA MIGRACION
+php bin/console doctrine:schema:update --complete --force ---> ACTUALIZA TODA LA BD
+composer update ------> CUANDO COGES UN PROYECTO EXTERNO HAY QUE PONER ESTO
+
+----- COMANDOS PARA CREAR EL PROYECTO -----
+php bin/console make:entity -------------------> CREAMOS UN CAMPO DE LA BD
+php bin/console make:crud ---------------------> ES PARA UTILIZAR LAS FUNCIONALIDADES QUE TIENE UNA BD
+php bin/console make:controller ---------------> CREA UN CONTROLLER
+php bin/console make:user ---------------------> CREA REPOSITORIOS
+php bin/console make:auth ---------------------> CREA UN LOGIN
+php bin/console make:registration-form --------> CREA UN FORMULARIO DE REGISTRO
+
+//PONER EN .ENV
+DATABASE_URL="mysql://root@127.0.0.1:3306/nombre de la base de datos"
+
+CADA VEZ QUE SE QUIERA INSERTAR ALGO EN LA BD SE DEBE HACER UN MIGRATION Y SU CONFIRMACION
