@@ -40,4 +40,13 @@ class PokemonRepository extends ServiceEntityRepository
     //            ->getOneOrNullResult()
     //        ;
     //    }
+
+    public function getRandomPokemon(): ?Pokemon
+    {
+        return $this->createQueryBuilder('p')
+            ->orderBy('RANDOM()')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
 }
