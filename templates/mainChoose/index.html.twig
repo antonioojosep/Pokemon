@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Pokémon - Menú Principal{% endblock %}
+
+{% block body %}
+    <div class="container text-center mt-5">
+        <h1 class="mb-4">¡Bienvenido Entrenador!</h1>
+        <a href="{{ path('app_logout') }}">Cerrar Sesión</a>
+        
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="d-grid gap-3">
+                     <a {#href="{{ path('findPokemon') }}" class="btn btn-primary btn-lg"> #}
+                        <i class="fas fa-search me-2"></i>
+                        Encontrar Pokémon
+                    </a>
+                    
+                    <a {#href="{{ path('app_pokedex') }}" class="btn btn-success btn-lg"> #}
+                        <i class="fas fa-book me-2"></i>
+                        Ver mi Pokédex
+                    </a>
+
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
