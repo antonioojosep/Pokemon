@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Batalla Pokémon{% endblock %}
+
+{% block body %}
+    <h1>Batalla Pokémon</h1>
+    
+    <div class="battle-container">
+        <div class="pokemon-card">
+            <h2>Tu Pokémon</h2>
+            <img src="{{ myPokemon.pokemon.imagen }}" alt="{{ myPokemon.pokemon.nombre }}">
+            <p>Nombre: {{ myPokemon.pokemon.nombre }}</p>
+            <p>Fuerza: {{ myPokemon.fuerza }}</p>
+            <p>Nivel: {{ myPokemon.nivel }}</p>
+        </div>
+        
+        <div class="vs">VS</div>
+        
+        <div class="pokemon-card">
+            <h2>Pokémon Aleatorio</h2>
+            <img src="{{ randomPokemon.imagen }}" alt="{{ randomPokemon.nombre }}">
+            <p>Nombre: {{ randomPokemon.nombre }}</p>
+            <p>Fuerza: {{ fuerza }}</p>
+            <p>Nivel: {{ nivel }}</p>
+        </div>
+    </div>
+    
+    <h2>Ganador: {{ ganador }}</h2>
+{% endblock %}

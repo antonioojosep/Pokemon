@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Pokedex{% endblock %}
+
+{% block body %}
+    <h1>Lista de Pokémon</h1>
+    
+    <div class="pokemon-container">
+        {% for pokemon in pokemons %}
+            <div class="pokemon-card">
+                <img src="{{ pokemon.pokemon.imagen }}" alt="{{ pokemon.pokemon.nombre }}">
+                <h2>{{ pokemon.pokemon.nombre }}</h2>
+                <p>Tipo: {{ pokemon.pokemon.tipo }}</p>
+                <p>Nivel: {{ pokemon.nivel }}</p>
+                <p>Fuerza: {{ pokemon.fuerza }}</p>
+                <a href={{ path('app_pokedex_entrenar', {'id': pokemon.id}) }}>Entrenar</a>
+                <a href={{ path('app_pokedex_luchar', {'id': pokemon.id}) }}>Combatir</a>
+            </div>
+        {% else %}
+            <p>No hay Pokémon disponibles.</p>
+        {% endfor %}
+    </div>
+{% endblock %}
+
