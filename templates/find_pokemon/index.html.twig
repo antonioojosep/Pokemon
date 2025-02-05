@@ -41,32 +41,19 @@
 {% endblock %}
 
 {% block body %}
-    <header>
-        <nav>
-            <ul>
-                <li><a href="{{ path('findPokemon') }}">Buscar Pokémon</a></li>
-                <li><a href="/register">Registrarse</a></li>
-                {% if app.user %}
-                    <li><a href="/logout">Cerrar Sesión</a></li>
-                {% else %}
-                    <li><a href="/login">Iniciar Sesión</a></li>
-                {% endif %}
-            </ul>
-        </nav>
-    </header>
     <div class="pokemon-card">
         {% if pokemon %}
             <img src="{{ pokemon.imagen }}" alt="{{ pokemon.nombre }}" class="pokemon-image">
             <h2>#{{ pokemon.id }} - {{ pokemon.nombre }}</h2>
             <div class="button-container">
                 <button class="btn btn-catch">Atrapar</button>
-                <a href="{{ path('app_main') }}" class="btn btn-run">Huir</a>
+                <a href="{{ path('app_main_choose') }}" class="btn btn-run">Huir</a>
             </div>
         {% else %}
             <p>No se encontró ningún Pokémon...</p>
             <div class="button-container">
-                <a href="{{ path('app_main') }}" class="btn btn-run">Volver al inicio</a>
+                <a href="{{ path('app_main_choose') }}" class="btn btn-run">Volver al inicio</a>
             </div>
         {% endif %}
     </div>
-{% endblock %} 
+{% endblock %}

@@ -43,10 +43,19 @@ class PokemonRepository extends ServiceEntityRepository
 
     public function getRandomPokemon(): ?Pokemon
     {
-        return $this->createQueryBuilder('p')
-            ->orderBy('RANDOM()')
-            ->setMaxResults(1)
-            ->getQuery()
-            ->getOneOrNullResult();
+        $conn = $this->getEntityManager()->getConnection();
+        $sql = 'SELECT * FROM pokemon ORDER BY RAND() LIMIT 1';
+        
+        try {
+            $result = $conn->executeQuery($sql)->fetchAssociative();
+            
+            if (!$result) {
+                return null;
+            }
+            
+            return $this->find($result['id']);
+        } catch (\Exception $e) {
+            return null;
+        }
     }
 }
