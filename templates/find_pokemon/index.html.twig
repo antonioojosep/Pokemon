@@ -1,0 +1,72 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}¡Un Pokémon salvaje apareció!{% endblock %}
+
+{% block stylesheets %}
+<style>
+    .pokemon-card {
+        text-align: center;
+        max-width: 400px;
+        margin: 50px auto;
+        padding: 20px;
+        border: 2px solid #ccc;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .pokemon-image {
+        max-width: 200px;
+        height: auto;
+        margin: 20px 0;
+    }
+    .button-container {
+        display: flex;
+        justify-content: space-around;
+        margin-top: 20px;
+    }
+    .btn {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        color: white;
+        font-weight: bold;
+    }
+    .btn-catch {
+        background-color: #007bff;
+    }
+    .btn-run {
+        background-color: #dc3545;
+    }
+</style>
+{% endblock %}
+
+{% block body %}
+    <header>
+        <nav>
+            <ul>
+                <li><a href="{{ path('findPokemon') }}">Buscar Pokémon</a></li>
+                <li><a href="/register">Registrarse</a></li>
+                {% if app.user %}
+                    <li><a href="/logout">Cerrar Sesión</a></li>
+                {% else %}
+                    <li><a href="/login">Iniciar Sesión</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
+    <div class="pokemon-card">
+        {% if pokemon %}
+            <img src="{{ pokemon.imagen }}" alt="{{ pokemon.nombre }}" class="pokemon-image">
+            <h2>#{{ pokemon.id }} - {{ pokemon.nombre }}</h2>
+            <div class="button-container">
+                <button class="btn btn-catch">Atrapar</button>
+                <a href="{{ path('app_main') }}" class="btn btn-run">Huir</a>
+            </div>
+        {% else %}
+            <p>No se encontró ningún Pokémon...</p>
+            <div class="button-container">
+                <a href="{{ path('app_main') }}" class="btn btn-run">Volver al inicio</a>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %} 
