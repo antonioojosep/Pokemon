@@ -2,6 +2,8 @@
 
 {% block title %}Log in!{% endblock %}
 
+{% block nav %}{% endblock %}
+
 {% block body %}
 <form method="post">
     {% if error %}
@@ -15,8 +17,8 @@
     {% endif %}
 
     <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-    <label for="inputId">Id</label>
-    <input type="text" value="{{ last_username }}" name="id" id="inputId" class="form-control" autocomplete="username" required autofocus>
+    <label for="inputUsername">Username</label>
+    <input type="text" value="{{ last_username }}" name="username" id="inputUsername" class="form-control" autocomplete="username" required autofocus>
     <label for="inputPassword">Password</label>
     <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
 

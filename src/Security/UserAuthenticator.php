@@ -27,12 +27,12 @@ class UserAuthenticator extends AbstractLoginFormAuthenticator
 
     public function authenticate(Request $request): Passport
     {
-        $id = $request->getPayload()->getString('id');
+        $username = $request->getPayload()->getString('username');
 
-        $request->getSession()->set(SecurityRequestAttributes::LAST_USERNAME, $id);
+        $request->getSession()->set(SecurityRequestAttributes::LAST_USERNAME, $username);
 
         return new Passport(
-            new UserBadge($id),
+            new UserBadge($username),
             new PasswordCredentials($request->getPayload()->getString('password')),
             [
                 new CsrfTokenBadge('authenticate', $request->getPayload()->getString('_csrf_token')),            ]
@@ -46,7 +46,7 @@ class UserAuthenticator extends AbstractLoginFormAuthenticator
         }
 
         // For example:
-        // return new RedirectResponse($this->urlGenerator->generate('some_route'));
+        return new RedirectResponse($this->urlGenerator->generate('app_pokemon_index'));
         throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);
     }
 

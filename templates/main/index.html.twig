@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello MainController!{% endblock %}
+
+{% block body %}
+<header>
+{% block nav %}{% endblock %}
+        <nav>
+            <ul>
+                <li><a href="/register">Registrarse</a></li>
+                {% if app.user %}
+                    <li><a href="/logout">Cerrar Sesión</a></li>
+                {% else %}
+                    <li><a href="/login">Iniciar Sesión</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h1>Bienvenido a Nuestra Página</h1>
+        {% if app.user %}
+            <p>Hola, {{ app.user.username }}! Nos alegra verte de nuevo.</p>
+        {% else %}
+            <p>Por favor, inicia sesión para unirte al chat</p>
+        {% endif %}
+    </main>
+{% endblock %}
