@@ -44,6 +44,16 @@ class Pokedex
         return $this;
     }
 
+    public function entrenar()
+    {
+        $this->fuerza += 10;
+    }
+
+    public function gana()
+    {
+        $this->nivel += 1;
+    }
+
     public function getUser(): ?User
     {
         return $this->user;

@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Pokemon;
 use App\Form\PokemonType;
+use App\Repository\PokedexRepository;
 use App\Repository\PokemonRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -15,8 +16,11 @@ use Symfony\Component\Routing\Attribute\Route;
 final class PokemonController extends AbstractController
 {
     #[Route(name: 'app_pokemon_index', methods: ['GET'])]
-    public function index(PokemonRepository $pokemonRepository): Response
+    public function index(PokemonRepository $pokemonRepository, PokedexRepository $pokedexRepository): Response
     {
+        if ($pokedexRepository->findByUser($this->getUser()) == null) {
+            $pokemonRepository->getRandomPokemon();  
+        }
         return $this->render('pokemon/index.html.twig', [
             'pokemon' => $pokemonRepository->findAll(),
         ]);
