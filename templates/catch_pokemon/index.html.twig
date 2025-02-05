@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Intento de Captura{% endblock %}
+
+{% block stylesheets %}
+<style>
+    .result-card {
+        text-align: center;
+        max-width: 400px;
+        margin: 50px auto;
+        padding: 20px;
+        border: 2px solid #ccc;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        background-color: white;
+    }
+    .pokemon-image {
+        max-width: 200px;
+
+        height: auto;
+        margin: 20px 0;
+    }
+    .success {
+        color: #28a745;
+    }
+    .failure {
+        color: #dc3545;
+    }
+    .btn {
+        display: inline-block;
+        padding: 10px 20px;
+        margin-top: 20px;
+        border: none;
+        border-radius: 5px;
+        background-color: #007bff;
+        color: white;
+        text-decoration: none;
+        font-weight: bold;
+    }
+</style>
+{% endblock %}
+
+{% block body %}
+    <div class="result-card">
+        <img src="{{ pokemon.imagen }}" alt="{{ pokemon.nombre }}" class="pokemon-image">
+        {% if success %}
+            <h2 class="success">¡Felicidades!</h2>
+            <p>Has capturado a {{ pokemon.nombre }} con éxito.</p>
+        {% else %}
+            <h2 class="failure">¡Oh no!</h2>
+            <p>{{ pokemon.nombre }} ha escapado.</p>
+        {% endif %}
+        <a href="{{ path('app_main_choose') }}" class="btn">Volver al inicio</a>
+    </div>
+{% endblock %} 

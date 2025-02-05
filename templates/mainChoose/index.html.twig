@@ -2,26 +2,65 @@
 
 {% block title %}Pokémon - Menú Principal{% endblock %}
 
-{% block body %}
-    <div class="container text-center mt-5">
-        <h1 class="mb-4">¡Bienvenido Entrenador!</h1>
-        <a href="{{ path('app_logout') }}">Cerrar Sesión</a>
-        
-        <div class="row justify-content-center">
-            <div class="col-md-6">
-                <div class="d-grid gap-3">
-                     <a href="{{ path('findPokemon') }}" class="btn btn-primary btn-lg"> 
-                        <i class="fas fa-search me-2"></i>
-                        Encontrar Pokémon
-                    </a>
-                    
-                    <a href="{{ path('app_pokedex') }}" class="btn btn-success btn-lg">
-                        <i class="fas fa-book me-2"></i>
-                        Ver mi Pokédex
-                    </a>
+{% block stylesheets %}
+<style>
+    .logout-btn {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        text-decoration: none;
+        color: #dc3545;
+        font-weight: bold;
+    }
+    .menu-container {
+        text-align: center;
+        margin-top: 100px;
+    }
+    .menu-buttons {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        max-width: 300px;
+        margin: 0 auto;
+    }
+    .menu-btn {
+        padding: 15px 30px;
+        border: none;
+        border-radius: 8px;
+        color: white;
+        text-decoration: none;
+        font-weight: bold;
+        font-size: 1.1em;
+        transition: opacity 0.3s;
+    }
+    .menu-btn:hover {
+        opacity: 0.9;
+    }
+    .btn-find {
+        background-color: #007bff;
+    }
+    .btn-pokedex {
+        background-color: #28a745;
+    }
+</style>
+{% endblock %}
 
-                </div>
-            </div>
+{% block body %}
+    <a href="{{ path('app_logout') }}" class="logout-btn">Cerrar Sesión</a>
+    
+    <div class="menu-container">
+        <h1 class="mb-4">¡Bienvenido Entrenador!</h1>
+        
+        <div class="menu-buttons">
+            <a href="{{ path('findPokemon') }}" class="menu-btn btn-find">
+                <i class="fas fa-search me-2"></i>
+                Encontrar Pokémon
+            </a>
+            
+            <a href="{{ path('app_pokedex_index') }}" class="menu-btn btn-pokedex">
+                <i class="fas fa-book me-2"></i>
+                Ver mi Pokédex
+            </a>
         </div>
     </div>
 {% endblock %}

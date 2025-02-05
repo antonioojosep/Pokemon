@@ -32,7 +32,7 @@
         font-weight: bold;
     }
     .btn-catch {
-        background-color: #007bff;
+        background-color: #28a745;
     }
     .btn-run {
         background-color: #dc3545;
@@ -46,7 +46,7 @@
             <img src="{{ pokemon.imagen }}" alt="{{ pokemon.nombre }}" class="pokemon-image">
             <h2>#{{ pokemon.id }} - {{ pokemon.nombre }}</h2>
             <div class="button-container">
-                <button class="btn btn-catch">Atrapar</button>
+                <a href="{{ path('app_catch_pokemon', {'id': pokemon.id}) }}" class="btn btn-catch">Atrapar</a>
                 <a href="{{ path('app_main_choose') }}" class="btn btn-run">Huir</a>
             </div>
         {% else %}
