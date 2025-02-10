@@ -44,9 +44,9 @@
                     <a href="{{ path('app_pokedex_resucitar') }}" class="btn btn-warning">Resucitar Pokémon</a>
                 </div>
             </div>
+        {% else %}
+            <a href="{{ path('app_pokedex_index') }}" class="btn btn-primary mt-3">Volver a la Pokédex</a>
         {% endif %}
-        
-        <a href="{{ path('app_pokedex_index') }}" class="btn btn-primary mt-3">Volver a la Pokédex</a>
     </div>
 </div>
 {% endblock %}
