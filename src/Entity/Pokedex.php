@@ -27,6 +27,9 @@ class Pokedex
     #[ORM\Column]
     private ?int $fuerza = null;
 
+    #[ORM\Column]
+    private ?bool $derrotado = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -86,6 +89,18 @@ class Pokedex
     public function setFuerza(int $fuerza): static
     {
         $this->fuerza = $fuerza;
+
+        return $this;
+    }
+
+    public function isDerrotado(): ?bool
+    {
+        return $this->derrotado;
+    }
+
+    public function setDerrotado(bool $derrotado): static
+    {
+        $this->derrotado = $derrotado;
 
         return $this;
     }
