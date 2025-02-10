@@ -90,59 +90,63 @@ final class PokedexController extends AbstractController
     public function subirNivel(int $id, PokedexRepository $pokedexRepository, EntityManagerInterface $entityManager): Response
     {
         $pokemon = $pokedexRepository->findOneBy(['id' => $id]);
-        $pokemon->gana();
-        $entityManager->persist($pokemon);
-        $entityManager->flush();
         
-        $this->addFlash('success', '¡Tu Pokémon ha subido de nivel!');
-        return $this->redirectToRoute('app_pokedex_index');
-    }
-
-    #[Route('/capturar/{id}', name: 'app_pokedex_capturar')]
-    public function capturar(int $id, PokemonRepository $pokemonRepository, EntityManagerInterface $entityManager): Response
-    {
-        $pokemon = $pokemonRepository->find($id);
-        $probabilidad = random_int(1, 100);
-        
-        if ($probabilidad <= 40) { // 40% de probabilidad de captura
-            $pokedex = new Pokedex();
-            $pokedex->setPokemon($pokemon);
-            $pokedex->setUser($this->getUser());
-            $pokedex->setNivel(1);
-            $pokedex->setFuerza(10);
-            $pokedex->setDerrotado(false);
-            
-            $entityManager->persist($pokedex);
+        if ($pokemon && $pokemon->getUser() === $this->getUser()) {
+            $pokemon->setNivel($pokemon->getNivel() + 1);
+            $entityManager->persist($pokemon);
             $entityManager->flush();
             
-            $this->addFlash('success', '¡Has capturado al Pokémon!');
+            $this->addFlash('success', '¡' . $pokemon->getPokemon()->getNombre() . ' ha subido al nivel ' . $pokemon->getNivel() . '!');
         } else {
-            $this->addFlash('error', 'El Pokémon ha escapado...');
+            $this->addFlash('error', 'No se pudo subir de nivel al Pokémon.');
         }
         
         return $this->redirectToRoute('app_pokedex_index');
     }
 
+    #[Route('/capturar/{id}', name: 'app_pokedex_capturar')]
+    public function capturar(int $id): Response
+    {
+        // Redirigimos a la ruta existente de catch
+        return $this->redirectToRoute('app_catch_pokemon', ['id' => $id]);
+    }
+
     #[Route('/resucitar', name: 'app_pokedex_resucitar')]
-    public function resucitar(PokedexRepository $pokedexRepository, EntityManagerInterface $entityManager): Response
+    public function resucitar(PokedexRepository $pokedexRepository): Response
     {
         $pokemonsDerrotados = $pokedexRepository->findBy([
             'user' => $this->getUser(),
             'derrotado' => true
         ]);
         
-        if (count($pokemonsDerrotados) > 0) {
-            $pokemonAResucitar = $pokemonsDerrotados[array_rand($pokemonsDerrotados)];
-            $pokemonAResucitar->setDerrotado(false);
-            
-            $entityManager->persist($pokemonAResucitar);
-            $entityManager->flush();
-            
-            $this->addFlash('success', '¡Tu ' . $pokemonAResucitar->getPokemon()->getNombre() . ' ha vuelto a la vida!');
-        } else {
-            $this->addFlash('info', 'No tienes Pokémon derrotados para resucitar.');
+        return $this->render('pokedex/resucitar.html.twig', [
+            'pokemonsDerrotados' => $pokemonsDerrotados
+        ]);
+    }
+
+    #[Route('/resucitar/{id}', name: 'app_pokedex_resucitar_pokemon')]
+    public function resucitarPokemon(
+        int $id, 
+        PokedexRepository $pokedexRepository, 
+        EntityManagerInterface $entityManager
+    ): Response
+    {
+        $pokemon = $pokedexRepository->findOneBy([
+            'id' => $id,
+            'user' => $this->getUser(),
+            'derrotado' => true
+        ]);
+        
+        if (!$pokemon) {
+            $this->addFlash('error', 'Pokémon no encontrado o no está derrotado.');
+            return $this->redirectToRoute('app_pokedex_index');
         }
         
+        $pokemon->setDerrotado(false);
+        $entityManager->persist($pokemon);
+        $entityManager->flush();
+        
+        $this->addFlash('success', '¡' . $pokemon->getPokemon()->getNombre() . ' ha vuelto a la vida!');
         return $this->redirectToRoute('app_pokedex_index');
     }
 }

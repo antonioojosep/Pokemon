@@ -18,7 +18,6 @@ class Pokedex
     private ?Pokemon $pokemon = null;
 
     #[ORM\ManyToOne]
-    #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
 
     #[ORM\Column]
@@ -55,7 +54,6 @@ class Pokedex
 
     public function gana()
     {
-        $this->nivel += 1;
         $this->derrotado = false;
     }
 

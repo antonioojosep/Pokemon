@@ -31,11 +31,11 @@
     </div>
     
     <div class="text-center">
-        <h2 style="color: {% if ganador == myPokemon.pokemon.nombre %}#28a745{% else %}#dc3545{% endif %};">
+        <h2 style="color: {% if ganador == myPokemon.user.username %}#28a745{% else %}#dc3545{% endif %};">
             Ganador: {{ ganador }}
         </h2>
         
-        {% if ganador == myPokemon.pokemon.nombre %}
+        {% if ganador == myPokemon.user.username %}
             <div class="victory-options">
                 <h3>¡Has ganado! Elige una recompensa:</h3>
                 <div class="button-group">
