@@ -21,7 +21,7 @@ class PokedexRepository extends ServiceEntityRepository
     return $this->createQueryBuilder('p')
         ->andWhere('p.user = :user')
         ->setParameter('user', $user)
-        ->orderBy('p.id', 'ASC') // Ordena por id de forma ascendente
+        ->orderBy('p.pokemon', 'ASC')
         ->getQuery()
         ->getResult();
 }
