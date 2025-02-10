@@ -137,4 +137,46 @@ final class PokedexController extends AbstractController
         $this->addFlash('success', '¡Tu Pokémon ha sido resucitado con éxito!');
         return $this->redirectToRoute('app_pokedex_index');
     }
+
+    #[Route('/subir-nivel/{id}', name: 'app_pokedex_subir_nivel', methods: ['GET'])]
+    public function subirNivel(int $id, PokedexRepository $pokedexRepository, EntityManagerInterface $entityManager): Response
+    {
+        $pokemon = $pokedexRepository->findOneBy(['id' => $id]);
+        
+        if (!$pokemon) {
+            throw $this->createNotFoundException('No se encontró el Pokémon');
+        }
+
+        $pokemon->setNivel($pokemon->getNivel() + 1);
+        $pokemon->setFuerza($pokemon->getFuerza() + 5);
+        
+        $entityManager->persist($pokemon);
+        $entityManager->flush();
+
+        $this->addFlash('success', '¡Tu Pokémon ha subido de nivel!');
+        return $this->redirectToRoute('app_pokedex_index');
+    }
+
+    #[Route('/capturar/{id}', name: 'app_pokedex_capturar', methods: ['GET'])]
+    public function capturar(int $id, PokemonRepository $pokemonRepository, EntityManagerInterface $entityManager): Response
+    {
+        $pokemon = $pokemonRepository->find($id);
+        $success = (bool)random_int(0, 1); // 50% de probabilidad de captura
+        
+        if ($success) {
+            $pokedex = new Pokedex();
+            $pokedex->setPokemon($pokemon);
+            $pokedex->setUser($this->getUser());
+            $pokedex->setNivel(1);
+            $pokedex->setFuerza(10);
+            
+            $entityManager->persist($pokedex);
+            $entityManager->flush();
+        }
+
+        return $this->render('catch_pokemon/index.html.twig', [
+            'pokemon' => $pokemon,
+            'success' => $success
+        ]);
+    }
 }
