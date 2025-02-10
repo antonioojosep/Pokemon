@@ -28,7 +28,7 @@ class Pokedex
     private ?int $fuerza = null;
 
     #[ORM\Column]
-    private ?bool $derrotado = null;
+    private ?bool $derrotado = false;
 
 
     public function getId(): ?int
@@ -56,6 +56,12 @@ class Pokedex
     public function gana()
     {
         $this->nivel += 1;
+        $this->derrotado = false;
+    }
+
+    public function pierde()
+    {
+        $this->derrotado = true;
     }
 
     public function getUser(): ?User
@@ -102,7 +108,6 @@ class Pokedex
     public function setDerrotado(bool $derrotado): static
     {
         $this->derrotado = $derrotado;
-
         return $this;
     }
 }

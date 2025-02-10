@@ -49,8 +49,9 @@ final class PokedexController extends AbstractController
         if (($myPokemon->getFuerza() * $myPokemon->getNivel()) >= ($fuerza * $nivel)) {
             $batalla->setGanador($myPokemon->getUser()->getUsername());
             $myPokemon->gana();
-        }else {
+        } else {
             $batalla->setGanador("Pokemon Aleatorio");
+            $myPokemon->pierde();
         }
 
         $entityManager->persist($myPokemon, $batalla);

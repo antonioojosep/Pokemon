@@ -9,23 +9,44 @@
         max-width: 400px;
         margin: 50px auto;
         padding: 20px;
-        border: 2px solid #ccc;
         border-radius: 10px;
-        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         background-color: white;
+        height: 450px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
     }
+    
+    .pokemon-content {
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    
     .pokemon-image {
-        max-width: 200px;
-
-        height: auto;
-        margin: 20px 0;
+        width: 200px;
+        height: 200px;
+        object-fit: contain;
+        margin: 20px auto;
+        justify-content: center;
+        align-items: center;
     }
+    
     .success {
         color: #28a745;
+        font-size: 1.5em;
+        margin: 15px 0;
     }
+    
     .failure {
         color: #dc3545;
+        font-size: 1.5em;
+        margin: 15px 0;
     }
+    
     .btn {
         display: inline-block;
         padding: 10px 20px;
@@ -36,20 +57,29 @@
         color: white;
         text-decoration: none;
         font-weight: bold;
+        transition: opacity 0.3s;
+    }
+    
+    .btn:hover {
+        opacity: 0.9;
     }
 </style>
 {% endblock %}
 
 {% block body %}
     <div class="result-card">
-        <img src="{{ pokemon.imagen }}" alt="{{ pokemon.nombre }}" class="pokemon-image">
-        {% if success %}
-            <h2 class="success">¡Felicidades!</h2>
-            <p>Has capturado a {{ pokemon.nombre }} con éxito.</p>
-        {% else %}
-            <h2 class="failure">¡Oh no!</h2>
-            <p>{{ pokemon.nombre }} ha escapado.</p>
-        {% endif %}
-        <a href="{{ path('app_main_choose') }}" class="btn">Volver al inicio</a>
+        <div class="pokemon-content">
+            <img src="{{ pokemon.imagen }}" alt="{{ pokemon.nombre }}" class="pokemon-image">
+            {% if success %}
+                <h2 class="success">¡Felicidades!</h2>
+                <p>Has capturado a {{ pokemon.nombre }} con éxito.</p>
+            {% else %}
+                <h2 class="failure">¡Oh no!</h2>
+                <p>{{ pokemon.nombre }} ha escapado.</p>
+            {% endif %}
+        </div>
+        <div>
+            <a href="{{ path('app_main_choose') }}" class="btn">Volver al inicio</a>
+        </div>
     </div>
 {% endblock %} 
