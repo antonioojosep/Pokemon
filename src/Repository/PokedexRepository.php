@@ -16,12 +16,14 @@ class PokedexRepository extends ServiceEntityRepository
         parent::__construct($registry, Pokedex::class);
     }
 
-    public function findByUser ($user)
-    {
-        return $this->createQueryBuilder('p')
-            ->andWhere('p.user = :user')
-            ->setParameter('user', $user)
-            ->getQuery()
-            ->getResult();
-    }
+    public function findByUser($user)
+{
+    return $this->createQueryBuilder('p')
+        ->andWhere('p.user = :user')
+        ->setParameter('user', $user)
+        ->orderBy('p.id', 'ASC') // Ordena por id de forma ascendente
+        ->getQuery()
+        ->getResult();
+}
+
 }
