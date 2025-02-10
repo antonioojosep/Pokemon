@@ -28,7 +28,11 @@ class Pokedex
     private ?int $fuerza = null;
 
     #[ORM\Column]
+<<<<<<< HEAD
     private ?bool $derrotado = false;
+=======
+    private ?bool $derrotado = null;
+>>>>>>> 055d19a1fab61703b549a4c5787c5f5bc07e0ca1
 
     public function getId(): ?int
     {
@@ -107,6 +111,10 @@ class Pokedex
     public function setDerrotado(bool $derrotado): static
     {
         $this->derrotado = $derrotado;
+<<<<<<< HEAD
+=======
+
+>>>>>>> 055d19a1fab61703b549a4c5787c5f5bc07e0ca1
         return $this;
     }
 }
