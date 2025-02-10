@@ -40,8 +40,8 @@ final class PokedexController extends AbstractController
     {
         $randomPokemon = $pokemonRepository->getRandomPokemon();
         $myPokemon = $pokedexRepository->findOneBy(['id' => $id]);
-        $fuerza = rand(0, $myPokemon->getFuerza() + 10);
-        $nivel = rand(0, $myPokemon->getNivel() + 2);
+        $fuerza = rand(10, $myPokemon->getFuerza() + 10);
+        $nivel = rand(1, $myPokemon->getNivel() + 2);
         $batalla = new Batalla();
         $batalla->setPokemonAleatorio($randomPokemon);
         $batalla->setPokemonUsuario($myPokemon);
