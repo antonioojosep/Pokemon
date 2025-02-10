@@ -30,6 +30,7 @@ class Pokedex
     #[ORM\Column]
     private ?bool $derrotado = null;
 
+
     public function getId(): ?int
     {
         return $this->id;

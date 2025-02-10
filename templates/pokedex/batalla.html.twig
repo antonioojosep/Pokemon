@@ -34,7 +34,19 @@
         <h2 style="color: {% if ganador == myPokemon.pokemon.nombre %}#28a745{% else %}#dc3545{% endif %};">
             Ganador: {{ ganador }}
         </h2>
-        <a href="{{ path('app_pokedex_index') }}" class="btn btn-primary">Volver a la Pokédex</a>
+        
+        {% if ganador == myPokemon.pokemon.nombre %}
+            <div class="victory-options">
+                <h3>¡Has ganado! Elige una recompensa:</h3>
+                <div class="button-group">
+                    <a href="{{ path('app_pokedex_subir_nivel', {'id': myPokemon.id}) }}" class="btn btn-success">Subir de Nivel</a>
+                    <a href="{{ path('app_pokedex_capturar', {'id': randomPokemon.id}) }}" class="btn btn-primary">Intentar Capturar</a>
+                    <a href="{{ path('app_pokedex_resucitar') }}" class="btn btn-warning">Resucitar Pokémon</a>
+                </div>
+            </div>
+        {% endif %}
+        
+        <a href="{{ path('app_pokedex_index') }}" class="btn btn-primary mt-3">Volver a la Pokédex</a>
     </div>
 </div>
 {% endblock %}
