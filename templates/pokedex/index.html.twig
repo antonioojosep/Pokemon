@@ -23,6 +23,23 @@
                 justify-content: space-between;
             }
             
+            .pokemon-card.derrotado {
+                background-color: #f5f5f5;
+                border: 2px solid #dc3545;
+            }
+            
+            .pokemon-card.derrotado img {
+                filter: grayscale(100%);
+                opacity: 0.7;
+            }
+            
+            .pokemon-card.derrotado .btn {
+                background-color: #6c757d !important;
+                cursor: not-allowed;
+                pointer-events: none;
+                opacity: 0.5;
+            }
+            
             .pokemon-image {
                 width: 150px;
                 height: 150px;
@@ -37,6 +54,7 @@
                 justify-content: center;
             }
 
+<<<<<<< HEAD
             .pokemon-actions {
                 margin-top: auto;
                 padding: 10px 0;
@@ -47,6 +65,13 @@
                 flex-direction: column;
                 gap: 10px;
                 justify-content: center;
+=======
+            .button-group {
+                display: flex;
+                gap: 10px;
+                justify-content: center;
+                flex-wrap: wrap;
+>>>>>>> f788d0f363495c0f0f055af20a0e86cf91f62fdc
             }
     </style>
 {% endblock %}
@@ -60,15 +85,21 @@
     
     <div class="pokemon-grid">
         {% for pokemon in pokemons %}
-            <div class="pokemon-card">
+            <div class="pokemon-card {% if pokemon.derrotado %}derrotado{% endif %}">
                 <div class="pokemon-info">
                     <img src="{{ pokemon.pokemon.imagen }}" alt="{{ pokemon.pokemon.nombre }}" class="pokemon-image">
                     <h2>{{ pokemon.pokemon.nombre }}</h2>
                     <p>Tipo: {{ pokemon.pokemon.tipo }}</p>
                     <p>Nivel: {{ pokemon.nivel }}</p>
                     <p>Fuerza: {{ pokemon.fuerza }}</p>
+                    {% if pokemon.pokemon.nivelEvolucion %}
+                    {% endif %}
+                    {% if pokemon.derrotado %}
+                        <p class="text-danger">¡Pokémon Derrotado!</p>
+                    {% endif %}
                 </div>
                 <div class="pokemon-actions">
+<<<<<<< HEAD
                     {% if modo == 'pokedex' %}
                         <div class="button-group">
                             <a href={{ path('app_pokedex_entrenar', {'id': pokemon.id}) }} class="btn btn-success">Entrenar</a>
@@ -80,6 +111,20 @@
                             <a href={{ path('app_batalla_unirse', {'batallaId': batalla.id, 'pokemonId':pokemon.id}) }} class="btn btn-success">Elegir</a>
                         </div>
                     {% endif %}
+=======
+                    <div class="button-group">
+                        {% if not pokemon.derrotado %}
+                            <a href="{{ path('app_pokedex_entrenar', {'id': pokemon.id}) }}" class="btn btn-success">Entrenar</a>
+                            <a href="{{ path('app_pokedex_luchar', {'id': pokemon.id}) }}" class="btn btn-primary">Combatir</a>
+                            {% if pokemon.pokemon.evolucion and pokemon.pokemon.nivelEvolucion and pokemon.nivel >= pokemon.pokemon.nivelEvolucion %}
+                                <a href="{{ path('app_pokedex_evolucionar', {'id': pokemon.id}) }}" class="btn btn-warning">
+                                    <i class="btn btn-primary"></i> Evolucionar
+                                </a>
+                            {% endif %}
+                        {% else %}
+                        {% endif %}
+                    </div>
+>>>>>>> f788d0f363495c0f0f055af20a0e86cf91f62fdc
                 </div>
             </div>
         {% else %}
