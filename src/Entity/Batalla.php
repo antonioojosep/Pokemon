@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\BatallaRepository;
+use App\Repository\PokedexRepository;
+use App\Repository\PokemonRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: BatallaRepository::class)]
@@ -15,52 +17,82 @@ class Batalla
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Pokedex $pokemon_usuario = null;
+    private ?Pokedex $pokemon1 = null;
+
+    #[ORM\ManyToOne]
+    private ?Pokedex $pokemon2 = null;
+
+    #[ORM\ManyToOne]
+    private ?User $ganador = null;
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Pokemon $pokemon_aleatorio = null;
+    private ?User $user1 = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $ganador = null;
+    #[ORM\ManyToOne]
+    private ?User $user2 = null;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getPokemonUsuario(): ?Pokedex
+    public function getPokemon1(): ?Pokedex
     {
-        return $this->pokemon_usuario;
+        return $this->pokemon1;
     }
 
-    public function setPokemonUsuario(?Pokedex $pokemon_usuario): static
+    public function setPokemon1(?Pokedex $pokemon1): static
     {
-        $this->pokemon_usuario = $pokemon_usuario;
+        $this->pokemon1 = $pokemon1;
 
         return $this;
     }
 
-    public function getPokemonAleatorio(): ?Pokemon
+    public function getPokemon2(): ?Pokedex
     {
-        return $this->pokemon_aleatorio;
+        return $this->pokemon2;
     }
 
-    public function setPokemonAleatorio(?Pokemon $pokemon_aleatorio): static
+    public function setPokemon2(?Pokedex $pokemon2): static
     {
-        $this->pokemon_aleatorio = $pokemon_aleatorio;
+        $this->pokemon2 = $pokemon2;
 
         return $this;
     }
 
-    public function getGanador(): ?string
+    public function getGanador(): ?User
     {
         return $this->ganador;
     }
 
-    public function setGanador(string $ganador): static
+    public function setGanador(?User $ganador): static
     {
         $this->ganador = $ganador;
+
+        return $this;
+    }
+
+    public function getUser1(): ?User
+    {
+        return $this->user1;
+    }
+
+    public function setUser1(?User $user1): static
+    {
+        $this->user1 = $user1;
+
+        return $this;
+    }
+
+    public function getUser2(): ?User
+    {
+        return $this->user2;
+    }
+
+    public function setUser2(?User $user2): static
+    {
+        $this->user2 = $user2;
 
         return $this;
     }
