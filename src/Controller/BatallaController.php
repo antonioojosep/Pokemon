@@ -49,9 +49,10 @@ final class BatallaController extends AbstractController
         $entityManager->flush();
 
         return $this->render('batalla/show.html.twig', [
-            'pokemon1' => $batalla->getPokemon2(),
-            'pokemon2' => $batalla->getPokemon1(),
-            'ganador' => $batalla->getGanador()
+            'pokemon2' => $batalla->getPokemon2(),
+            'pokemon1' => $batalla->getPokemon1(),
+            'ganador' => $batalla->getGanador(),
+            'batalla' => $batalla
         ]);
     }
 

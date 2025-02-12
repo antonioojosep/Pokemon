@@ -57,7 +57,8 @@ final class PokedexController extends AbstractController
         return $this->render('batalla/show.html.twig', [
             'pokemon2' => $batalla->getPokemon2(),
             'pokemon1' => $batalla->getPokemon1(),
-            'ganador' => $batalla->getGanador()
+            'ganador' => $batalla->getGanador(),
+            'batalla' => $batalla
         ]);
     }
 
@@ -121,7 +122,7 @@ final class PokedexController extends AbstractController
     }
 
     #[Route('/subir-nivel/{id}', name: 'app_pokedex_subir_nivel', methods: ['GET'])]
-    public function subirNivel(int $id, PokedexRepository $pokedexRepository, EntityManagerInterface $entityManager): Response
+    public function subirNivel(int $id, PokedexRepository $pokedexRepository, EntityManagerInterface $entityManager)
     {
         $pokemon = $pokedexRepository->findOneBy(['id' => $id]);
         
@@ -142,7 +143,7 @@ final class PokedexController extends AbstractController
     #[Route('/capturar/{id}', name: 'app_pokedex_capturar', methods: ['GET'])]
     public function capturar(int $id, PokemonRepository $pokemonRepository, EntityManagerInterface $entityManager): Response
     {
-        $pokemon = $pokemonRepository->find($id);
+        $pokemon = $pokemonRepository->findOneBy(['id' => $id]);
         $success = (bool)random_int(0, 1); // 50% de probabilidad de captura
         
         if ($success) {

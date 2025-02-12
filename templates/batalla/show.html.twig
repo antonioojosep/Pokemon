@@ -34,11 +34,20 @@
         <h2 style="color: {% if ganador == pokemon1.pokemon.nombre %}#28a745{% else %}#dc3545{% endif %};">
         {% if ganador == null %}
             Has Perdido
+            <a href="{{ path('app_pokedex_index') }}" class="btn btn-primary">Volver a la Pokédex</a>
         {% else %}
             Ganador: {{ ganador.username }}
+            {% if ganador == app.user %}
+                <a href="{{ path('app_pokedex_resucitar') }}" class="btn btn-primary">Resucitar Pokémon</a>
+                <a href="{{ path('app_pokedex_subir_nivel',{'id': pokemon1.id}) }}" class="btn btn-primary">Subir de nivel</a>
+                {% if batalla.user2 == null %}
+                    <a href="{{ path('app_pokedex_capturar', {'id': pokemon2.pokemon.id}) }}" class="btn btn-primary">Capturar pokemon</a>
+                {% endif %}
+                {% else %}
+                <a href="{{ path('app_pokedex_index') }}" class="btn btn-primary">Volver a la Pokédex</a>
+            {% endif %}
         {% endif %}
         </h2>
-        <a href="{{ path('app_pokedex_index') }}" class="btn btn-primary">Volver a la Pokédex</a>
     </div>
 </div>
 {% endblock %}
