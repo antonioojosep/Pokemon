@@ -27,7 +27,6 @@ class BatallaRepository extends ServiceEntityRepository
         $pokemon2->setPokemon($randomPokemon);
         $pokemon2->setFuerza(rand(10, $pokemon1->getFuerza()*2));
         $pokemon2->setNivel(rand(1, $pokemon1->getNivel()*2));
-        $entityManager->persist($pokemon2);
 
         // Batalla
         $batalla = new Batalla();
@@ -38,7 +37,12 @@ class BatallaRepository extends ServiceEntityRepository
         if (($pokemon1->getFuerza() * $pokemon1->getNivel()) >= ($pokemon2->getFuerza() * $pokemon2->getNivel())) {
             $batalla->setGanador($user1);
             $pokemon1->gana();
+        } else {
+            $pokemon1->pierde();
         }
+        $entityManager->persist($pokemon1);
+        $entityManager->persist($pokemon2);
+        $entityManager->flush();
         return $batalla;
     }
 
@@ -61,18 +65,22 @@ class BatallaRepository extends ServiceEntityRepository
     return $batalla;
 }
 
-    public function joinBattle( ?Pokedex $pokemon2, ?Batalla $batalla): ?Batalla
+    public function joinBattle( ?Pokedex $pokemon2, ?Batalla $batalla, EntityManager $entityManager): ?Batalla
     {
         $batalla->setPokemon2($pokemon2);
 
         if (($batalla->getPokemon1()->getFuerza() * $batalla->getPokemon1()->getNivel()) >= ($pokemon2->getFuerza() * $pokemon2->getNivel())) {
             $batalla->setGanador($batalla->getUser1());
             $batalla->getPokemon1()->gana();
+            $pokemon2->pierde();
         } else {
             $batalla->setGanador($batalla->getUser1());
             $pokemon2->gana();
+            $batalla->getPokemon1()->pierde();
         }
-
+        $entityManager->persist($pokemon2);
+        $entityManager->persist($batalla->getPokemon1());
+        $entityManager->flush();
         return $batalla;
     }
 
