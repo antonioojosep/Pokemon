@@ -6,6 +6,7 @@ use App\Entity\Batalla;
 use App\Entity\Pokedex;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\EntityManager;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -18,7 +19,7 @@ class BatallaRepository extends ServiceEntityRepository
         parent::__construct($registry, Batalla::class);
     }
 
-    public function randomBattle(?User $user1, ?Pokedex $pokemon1, PokemonRepository $pokemonRepository): Batalla
+    public function randomBattle(?User $user1, ?Pokedex $pokemon1, PokemonRepository $pokemonRepository, EntityManager $entityManager): Batalla
     {
         // Pokemon Aleatorio
         $randomPokemon = $pokemonRepository->getRandomPokemon();
@@ -26,6 +27,7 @@ class BatallaRepository extends ServiceEntityRepository
         $pokemon2->setPokemon($randomPokemon);
         $pokemon2->setFuerza(rand(10, $pokemon1->getFuerza()*2));
         $pokemon2->setNivel(rand(1, $pokemon1->getNivel()*2));
+        $entityManager->persist($pokemon2);
 
         // Batalla
         $batalla = new Batalla();

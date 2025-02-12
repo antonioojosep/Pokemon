@@ -47,7 +47,7 @@ final class PokedexController extends AbstractController
     {
         $user = $this->getUser();
         $myPokemon = $pokedexRepository->findOneBy(['id' => $id]);
-        $batalla = $batallaRepository->randomBattle($user, $myPokemon, $pokemonRepository);
+        $batalla = $batallaRepository->randomBattle($user, $myPokemon, $pokemonRepository, $entityManager);
         
 
         $entityManager->persist($myPokemon);
