@@ -33,7 +33,7 @@ final class BatallaController extends AbstractController
     public function list(BatallaRepository $batallaRepository)
     {   
         return $this->render('batalla/index.html.twig', [
-            'batallas' => $batallaRepository->findBy(['user2' => $this->getUser()]),
+            'batallas' => $batallaRepository->findBy(['user2' => $this->getUser(),'pokemon2' => null]),
         ]);
     }
 
