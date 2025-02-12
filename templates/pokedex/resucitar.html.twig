@@ -1,0 +1,138 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Resucitar Pokémon{% endblock %}
+
+{% block stylesheets %}
+<style>
+    .pokemon-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 20px;
+        padding: 20px;
+    }
+
+    .pokemon-card {
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        padding: 15px;
+        text-align: center;
+        transition: transform 0.3s ease;
+    }
+
+    .pokemon-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .pokemon-info {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .pokemon-image {
+        width: 120px;
+        height: 120px;
+        object-fit: contain;
+        margin-bottom: 10px;
+    }
+
+    .pokemon-info h2 {
+        color: #333;
+        font-size: 1.5em;
+        margin: 10px 0;
+    }
+
+    .pokemon-info p {
+        color: #666;
+        margin: 5px 0;
+    }
+
+    .btn {
+        display: inline-block;
+        padding: 8px 16px;
+        border-radius: 5px;
+        text-decoration: none;
+        color: white;
+        font-weight: bold;
+        margin-top: 10px;
+        transition: opacity 0.3s ease;
+    }
+
+    .btn:hover {
+        opacity: 0.9;
+    }
+
+    .btn-success {
+        background-color: #28a745;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+    }
+
+    .alert {
+        padding: 15px;
+        margin: 20px 0;
+        border-radius: 5px;
+        text-align: center;
+    }
+
+    .alert-info {
+        background-color: #d1ecf1;
+        color: #0c5460;
+        border: 1px solid #bee5eb;
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+    h1 {
+        text-align: center;
+        color: #333;
+        margin-bottom: 30px;
+    }
+
+    .mt-4 {
+        margin-top: 20px;
+    }
+
+    .text-center {
+        text-align: center;
+    }
+</style>
+{% endblock %}
+
+{% block body %}
+<div class="container">
+    <h1>Resucitar Pokémon</h1>
+    
+    {% if pokemonsDerrotados is empty %}
+        <div class="alert alert-info">
+            No tienes Pokémon derrotados para resucitar.
+        </div>
+    {% else %}
+        <div class="pokemon-grid">
+            {% for pokemon in pokemonsDerrotados %}
+                <div class="pokemon-card">
+                    <div class="pokemon-info">
+                        <img src="{{ pokemon.pokemon.imagen }}" alt="{{ pokemon.pokemon.nombre }}" class="pokemon-image">
+                        <h2>{{ pokemon.pokemon.nombre }}</h2>
+                        <p>Tipo: {{ pokemon.pokemon.tipo }}</p>
+                        <p>Nivel: {{ pokemon.nivel }}</p>
+                        <p>Fuerza: {{ pokemon.fuerza }}</p>
+                        <a href="{{ path('app_pokedex_resucitar_pokemon', {'id': pokemon.id}) }}" class="btn btn-success">Resucitar</a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+    
+    <div class="text-center mt-4">
+        <a href="{{ path('app_pokedex_index') }}" class="btn btn-primary">Volver a la Pokédex</a>
+    </div>
+</div>
+{% endblock %} 
