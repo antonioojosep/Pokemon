@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Batalla Pokémon{% endblock %}
+
+{% block body %}
+<div class="container">
+    <h1>Batalla Pokémon</h1>
+    
+    <div class="battle-container">
+        <div class="pokemon-card" style="width: 300px;">
+            <div class="pokemon-info">
+                <h2>Tu Pokémon</h2>
+                <img src="{{ pokemon1.pokemon.imagen }}" alt="{{ pokemon1.pokemon.nombre }}" class="pokemon-image">
+                <h3>{{ pokemon1.pokemon.nombre }}</h3>
+                <p>Fuerza: {{ pokemon1.fuerza }}</p>
+                <p>Nivel: {{ pokemon1.nivel }}</p>
+            </div>
+        </div>
+        
+        <div class="vs">VS</div>
+        
+        <div class="pokemon-card" style="width: 300px;">
+            <div class="pokemon-info">
+                <h2>Pokémon 2</h2>
+                <img src="{{ pokemon2.pokemon.imagen }}" alt="{{ pokemon2.pokemon.nombre }}" class="pokemon-image">
+                <h3>{{ pokemon2.pokemon.nombre }}</h3>
+                <p>Fuerza: {{ pokemon2.fuerza }}</p>
+                <p>Nivel: {{ pokemon2.nivel }}</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="text-center">
+        <h2 style="color: {% if ganador == pokemon1.pokemon.nombre %}#28a745{% else %}#dc3545{% endif %};">
+        {% if ganador == null %}
+            Has Perdido
+        {% else %}
+            Ganador: {{ ganador.username }}
+        {% endif %}
+        </h2>
+        <a href="{{ path('app_pokedex_index') }}" class="btn btn-primary">Volver a la Pokédex</a>
+    </div>
+</div>
+{% endblock %}

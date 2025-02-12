@@ -52,14 +52,19 @@
         <h1 class="mb-4">¡Bienvenido Entrenador!</h1>
         
         <div class="menu-buttons">
+            <a href="{{ path('app_pokedex_index') }}" class="menu-btn btn-pokedex">
+                <i class="fas fa-book me-2"></i>
+                Ver mi Pokédex
+            </a>
+
             <a href="{{ path('findPokemon') }}" class="menu-btn btn-find">
                 <i class="fas fa-search me-2"></i>
                 Encontrar Pokémon
             </a>
             
-            <a href="{{ path('app_pokedex_index') }}" class="menu-btn btn-pokedex">
+            <a href="{{ path('app_batalla_index') }}" class="menu-btn btn-pokedex">
                 <i class="fas fa-book me-2"></i>
-                Ver mi Pokédex
+                Ver mis Solicitudes
             </a>
         </div>
     </div>
