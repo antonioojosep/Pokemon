@@ -2,9 +2,9 @@
 
 namespace App\Controller;
 
-use App\Entity\Batalla;
 use App\Entity\Pokedex;
 use App\Form\PokedexType;
+use App\Repository\BatallaRepository;
 use App\Repository\PokedexRepository;
 use App\Repository\PokemonRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -21,6 +21,7 @@ final class PokedexController extends AbstractController
     {
         return $this->render('pokedex/index.html.twig', [
             'pokemons' => $pokedexRepository->findByUser($this->getUser()),
+            'modo' => 'pokedex'
         ]);
     }
 
@@ -41,40 +42,21 @@ final class PokedexController extends AbstractController
         return $this->redirectToRoute('app_pokedex_index');
     }
 
-    #[Route('/luchar/{id}', name: 'app_pokedex_luchar', methods: ['GET', 'POST'])]
-    public function luchar(int $id, PokemonRepository $pokemonRepository, PokedexRepository $pokedexRepository, EntityManagerInterface $entityManager)
+    #[Route('/lucharRandom/:{id}', name: 'app_pokedex_luchar_random', methods: ['GET'])]
+    public function lucharRandom(int $id, BatallaRepository $batallaRepository, PokedexRepository $pokedexRepository , PokemonRepository $pokemonRepository,EntityManagerInterface $entityManager)
     {
+        $user = $this->getUser();
         $myPokemon = $pokedexRepository->findOneBy(['id' => $id]);
+        $batalla = $batallaRepository->randomBattle($user, $myPokemon, $pokemonRepository);
         
-        if ($myPokemon->isDerrotado()) {
-            $this->addFlash('error', 'No puedes luchar con un Pokémon derrotado.');
-            return $this->redirectToRoute('app_pokedex_index');
-        }
-
-        $randomPokemon = $pokemonRepository->getRandomPokemon();
-        $fuerza = rand(10, $myPokemon->getFuerza() + 10);
-        $nivel = rand(1, $myPokemon->getNivel() + 2);
-        $batalla = new Batalla();
-        $batalla->setPokemonAleatorio($randomPokemon);
-        $batalla->setPokemonUsuario($myPokemon);
-
-        if (($myPokemon->getFuerza() * $myPokemon->getNivel()) >= ($fuerza * $nivel)) {
-            $batalla->setGanador($myPokemon->getUser()->getUsername());
-            $myPokemon->gana();
-        } else {
-            $batalla->setGanador("Pokemon Aleatorio");
-            $myPokemon->pierde();
-        }
 
         $entityManager->persist($myPokemon);
         $entityManager->persist($batalla);
         $entityManager->flush();
 
-        return $this->render('pokedex/batalla.html.twig', [
-            'randomPokemon' => $randomPokemon,
-            'myPokemon' => $myPokemon,
-            'fuerza' => $fuerza,
-            'nivel' => $nivel,
+        return $this->render('batalla/show.html.twig', [
+            'pokemon2' => $batalla->getPokemon2(),
+            'pokemon1' => $batalla->getPokemon1(),
             'ganador' => $batalla->getGanador()
         ]);
     }

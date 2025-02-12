@@ -17,7 +17,7 @@
                 box-shadow: 0 2px 5px rgba(0,0,0,0.1);
                 padding: 20px;
                 text-align: center;
-                height: 400px; /* Altura fija para todas las cards */
+                height: auto; 
                 display: flex;
                 flex-direction: column;
                 justify-content: space-between;
@@ -54,11 +54,16 @@
                 justify-content: center;
             }
 
+            .pokemon-actions {
+                margin-top: auto;
+                padding: 10px 0;
+            }
+
             .button-group {
                 display: flex;
+                flex-direction: column;
                 gap: 10px;
                 justify-content: center;
-                flex-wrap: wrap;
             }
     </style>
 {% endblock %}
@@ -86,18 +91,22 @@
                     {% endif %}
                 </div>
                 <div class="pokemon-actions">
-                    <div class="button-group">
-                        {% if not pokemon.derrotado %}
-                            <a href="{{ path('app_pokedex_entrenar', {'id': pokemon.id}) }}" class="btn btn-success">Entrenar</a>
-                            <a href="{{ path('app_pokedex_luchar', {'id': pokemon.id}) }}" class="btn btn-primary">Combatir</a>
+                    {% if modo == 'pokedex' %}
+                        <div class="button-group">
+                            <a href={{ path('app_pokedex_entrenar', {'id': pokemon.id}) }} class="btn btn-success">Entrenar</a>
+                            <a href={{ path('app_pokedex_luchar_random', {'id': pokemon.id}) }} class="btn btn-primary">Combatir Aleatorio</a>
+                            <a href={{ path('app_batalla_new', {'pokemon': pokemon.id}) }} class="btn btn-success">Crear Batalla</a>
                             {% if pokemon.pokemon.evolucion and pokemon.pokemon.nivelEvolucion and pokemon.nivel >= pokemon.pokemon.nivelEvolucion %}
                                 <a href="{{ path('app_pokedex_evolucionar', {'id': pokemon.id}) }}" class="btn btn-warning">
                                     <i class="btn btn-primary"></i> Evolucionar
                                 </a>
                             {% endif %}
-                        {% else %}
-                        {% endif %}
-                    </div>
+                        </div>
+                    {% elseif modo == 'batalla' %}
+                        <div class="button-group">
+                            <a href={{ path('app_batalla_unirse', {'batallaId': batalla.id, 'pokemonId':pokemon.id}) }} class="btn btn-success">Elegir</a>
+                        </div>
+                    {% endif %}
                 </div>
             </div>
         {% else %}
