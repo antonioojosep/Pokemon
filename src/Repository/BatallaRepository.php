@@ -65,23 +65,13 @@ class BatallaRepository extends ServiceEntityRepository
     return $batalla;
 }
 
-    public function joinBattle( ?Pokedex $pokemon2, ?Batalla $batalla, EntityManager $entityManager): ?Batalla
-    {
-        $batalla->setPokemon2($pokemon2);
+    public function getBatallas() {
+        $qb = $this->createQueryBuilder('b')
+            ->leftJoin('App\Entity\BatallaEquipos', 'be', 'WITH', 
+                'b.id = be.batalla1 OR b.id = be.batalla2 OR b.id = be.batalla3')
+            ->where('be.id IS NULL');
 
-        if (($batalla->getPokemon1()->getFuerza() * $batalla->getPokemon1()->getNivel()) >= ($pokemon2->getFuerza() * $pokemon2->getNivel())) {
-            $batalla->setGanador($batalla->getUser1());
-            $batalla->getPokemon1()->gana();
-            $pokemon2->pierde();
-        } else {
-            $batalla->setGanador($batalla->getUser1());
-            $pokemon2->gana();
-            $batalla->getPokemon1()->pierde();
-        }
-        $entityManager->persist($pokemon2);
-        $entityManager->persist($batalla->getPokemon1());
-        $entityManager->flush();
-        return $batalla;
+        return $qb->getQuery()->getResult();
     }
 
 }

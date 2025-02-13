@@ -96,4 +96,20 @@ class Batalla
 
         return $this;
     }
+
+    public function joinBattle(?Pokedex $pokemon2): ?Batalla
+    {
+        $this->setPokemon2($pokemon2);
+
+        if (($this->getPokemon1()->getFuerza() * $this->getPokemon1()->getNivel()) >= ($pokemon2->getFuerza() * $pokemon2->getNivel())) {
+            $this->setGanador($this->getUser1());
+            $this->getPokemon1()->gana();
+            $pokemon2->pierde();
+        } else {
+            $this->setGanador($this->getUser1());
+            $pokemon2->gana();
+            $this->getPokemon1()->pierde();
+        }
+        return $this;
+    }
 }

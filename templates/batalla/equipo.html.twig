@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Solicitudes de Batallas por Equipos{% endblock %}
+
+{% block stylesheets %}
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        li {
+            background: white;
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        a {
+            text-decoration: none;
+            color: #007bff;
+            font-weight: bold;
+            display: block;
+            padding: 10px;
+        }
+
+        a:hover {
+            background-color: #007bff;
+            color: white;
+            border-radius: 5px;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <h1>Solicitudes de Batallas por Equipos</h1>
+
+    <ul>
+        {% for batalla in batallas %}
+            <li>
+                <a href="{{ path('app_batalla_ver_solicitud', {'id': batalla.id}) }}">Ver Solicitud de Batalla de Equipo #{{ batalla.id }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}
