@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ganador{% endblock %}
+
+{% block body %}
+    <h1>El ganador es: {{ ganador.username }}</h1>
+    <div class="text-center mt-4">
+        <a href="{{ path('app_pokedex_index') }}" class="btn btn-primary">Volver a la Pokédex</a>
+    </div>
+{% endblock %}

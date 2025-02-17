@@ -3,7 +3,9 @@
 namespace App\Entity;
 
 use App\Repository\BatallaEquiposRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\Response;
 
 #[ORM\Entity(repositoryClass: BatallaEquiposRepository::class)]
 class BatallaEquipos
@@ -122,35 +124,44 @@ class BatallaEquipos
 
     public function getAllBattles(): array
     {
-        return [$this->batalla1, $this->batalla2, $this->batalla3];
+        return [$this->getBatalla1(), $this->getBatalla2(), $this->getBatalla3()];
     }
 
     public function getAllPokemons(): array
     {
         $pokemons = [];
         foreach ($this->getAllBattles() as $battle) {
-            $pokemons[] = $battle->getPokemon1();
+            if ($battle->getPokemon1() != null) {
+                $pokemons[] = $battle->getPokemon1();
+            }
         }
         return $pokemons;
     }
 
-    public function getAllMyPokemons(): array
+    public function getAllPokemons2(): array
     {
         $pokemons = [];
         foreach ($this->getAllBattles() as $battle) {
-            $pokemons[] = $battle->getPokemon2();
+            if ($battle->getPokemon2() != null) {
+                $pokemons[] = $battle->getPokemon2();
+            }
         }
         return $pokemons;
     }
 
-    public function addPokemons2(Pokedex $pokemon) : void
+    public function addPokemons2(Pokedex $pokemon)
     {
         if ($this->batalla1->getPokemon2() == null) {
             $this->batalla1->joinBattle($pokemon);
+            return true;
         }elseif ($this->batalla2->getPokemon2() == null) {
             $this->batalla2->joinBattle($pokemon);
-        } else {
+            return true;
+        } elseif ($this->batalla3->getPokemon2() == null) {
             $this->batalla3->joinBattle($pokemon);
+            return false;
+        } else {
+            return false;
         }
     }
 
@@ -161,22 +172,20 @@ class BatallaEquipos
          }
     }
 
-    public function addPokemons1(Pokedex $pokemon) : void
+    public function addPokemons1(Pokedex $pokemon)
     {
         if ($this->batalla1->getPokemon1() == null) {
-            $this->batalla1->joinBattle($pokemon);
+            $this->batalla1->setPokemon1($pokemon);
+            return true;
         }elseif ($this->batalla2->getPokemon1() == null) {
             $this->batalla2->setPokemon1($pokemon);
-        } else {
+            return true;
+        } elseif ($this->batalla3->getPokemon1() == null) {
             $this->batalla3->setPokemon1($pokemon);
+            return false;
+        } else {
+            return false;
         }
-    }
-
-    public function addArrayPokemon1(array $pokemons) : void
-    {
-         foreach ($pokemons as $pokemon) {
-             $this->addPokemons1($pokemon);
-         }
     }
 
     public function setAllUser1(User $user) : void
@@ -197,16 +206,22 @@ class BatallaEquipos
         }
     }
 
-    public function luchar() : User
+    public function luchar()
     {
         $batallas = $this->getAllBattles();
-        $contador = [];
-
-        foreach ($batallas as $batalla) {
-            if (isset($contador[$batalla->getGanador()])) {
-                return $batalla->getGanador();
+        $user1 = 0;
+        $user2 = 0;
+        foreach ($batallas as $battle) {
+            if ($battle->getGanador() === $this->user1) {
+                $user1++;
+            } elseif ($battle->getGanador() === $this->user2) {
+                $user2++;
             }
-            $contador[] = $batalla->getGanador;
+        }
+        if ($user1 >= 2) {
+            $this->setGanador($this->user1);
+        }elseif ($user2 >= 2) {
+            $this->setGanador($this->user2);
         }
     }
 

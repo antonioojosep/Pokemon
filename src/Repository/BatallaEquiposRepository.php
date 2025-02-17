@@ -41,4 +41,14 @@ class BatallaEquiposRepository extends ServiceEntityRepository
     //        ;
     //    }
     
+    public function getAllPokemons1()
+    {
+        return $this->createQueryBuilder('b')
+            ->select('p')
+            ->from('App:Pokemon', 'p')
+            ->innerJoin('b.pokemon1', 'p1')
+            ->where('p1.id = b.pokemon1')
+            ->getQuery()
+            ->getResult();
+    }
 }

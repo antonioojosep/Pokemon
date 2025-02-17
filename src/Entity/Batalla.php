@@ -16,7 +16,6 @@ class Batalla
     private ?int $id = null;
 
     #[ORM\ManyToOne]
-    #[ORM\JoinColumn(nullable: false)]
     private ?Pokedex $pokemon1 = null;
 
     #[ORM\ManyToOne]
@@ -26,7 +25,6 @@ class Batalla
     private ?User $ganador = null;
 
     #[ORM\ManyToOne]
-    #[ORM\JoinColumn(nullable: false)]
     private ?User $user1 = null;
 
     #[ORM\ManyToOne]

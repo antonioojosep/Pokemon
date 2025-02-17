@@ -43,7 +43,7 @@ final class BatallaController extends AbstractController
         $pokemon2 = $pokedexRepository->find($pokemonId);
         $batalla = $batallaRepository->find($batallaId);
 
-        $batalla = $batallaRepository->joinBattle($pokemon2, $batalla, $entityManager);
+        $batalla->joinBattle($pokemon2, $batalla, $entityManager);
 
         $entityManager->persist($batalla);
         $entityManager->flush();

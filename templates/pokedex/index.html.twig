@@ -73,9 +73,7 @@
     <h1>Lista de Pokémon</h1>
     <div class="text-center mb-4">
         <a href="{{ path('app_main_choose') }}" class="btn btn-primary">Volver al Menú</a>
-        {% if modo == 'pokedex' %}
-            <a href="{{ path('app_batalla_teams') }}" class="btn btn-primary">Crear batalla por equipos</a>
-        {% endif %}
+        <a href="{{ path('app_batallaEquipos_new') }}" class="btn btn-primary">Batalla por Equipos</a>
     </div>
     
     <div class="pokemon-grid">
@@ -109,11 +107,12 @@
                         <div class="button-group">
                             <a href={{ path('app_batalla_unirse', {'batallaId': batalla.id, 'pokemonId':pokemon.id}) }} class="btn btn-success">Elegir</a>
                         </div>
+                    {% endif %}
                 </div>
             </div>
         {% else %}
             <p class="text-center">No hay Pokémon disponibles.</p>
+        {% endfor %}
     </div>
 </div>
 {% endblock %}
-
